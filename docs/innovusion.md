@@ -39,16 +39,17 @@ Via command line (assuming link is eth0).
 This version relies on installation of a package on your system.
 It is possible that there are configuration option available for this package but we lack any documentation so it's unclear what they are or how to access them.
 
-1. Download the *ROS2_23.08.31-release-2.12-fk-rc4-rv1.zip* file.
+1. Download the *ROS2_23.08.31-release-2.12-fk-rc4-rv1.zip* file from the *resources* folder.
 2. Extract *innovusion-ros-humble-2.12.0-fk-rc4-rv1-x86-public.deb*.
+    - ```unzip ROS2_23.08.31-release-2.12-fk-rc4-rv1.zip```
 3. Install.
-    - ```sudo dpkg -i install innovusion-ros-humble-2.12.0-fk-rc4-rv1-x86-public.deb```
+    - ```sudo dpkg -i install 23.08.31-release-2.12-fk-rc4-rv1/innovusion-ros-humble-2.12.0-fk-rc4-rv1-x86-public.deb```
 4. Run.
     - ```ros2 run innovusion publisher```
 
 The ros node will not output anything until the pointcloud is enabled via the web interface, this can be done manually or can be triggered via the lidar's REST interface. Calling the REST interface can be triggered automatically via a launch file if needed.
 
-```wget 172.168.1.10:8675/v1/pcs/enable?toggle=ON```
+```curl 172.168.1.10:8675/v1/pcs/enable?toggle=ON```
 
 ### Full version
 
