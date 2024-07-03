@@ -7,6 +7,8 @@
 
 ### Install Livox SDK
 
+This approach is best but only works if you have sudo rights to machine, the non-sudo approach is detailed below.
+
 1. ```git clone https://github.com/Livox-SDK/Livox-SDK2.git /tmp/Livox-SDK2```
 2. ```mkdir /tmp/Livox-SDK2/build```
 3. ```cd /tmp/Livox-SDK2/build```
@@ -49,7 +51,7 @@ Livox has two different drivers for different lidar models.
 
 1. From the workspace src directory.
 2. Clone repo.
-    - ```git@github.com:Livox-SDK/livox_ros_driver2.git```
+    - ```git clone git@github.com:Livox-SDK/livox_ros_driver2.git```
 3. Use known good version.
     - ```cd livox_ros_driver2```
     - ```git checkout tags/1.2.4```
@@ -61,6 +63,38 @@ Livox has two different drivers for different lidar models.
    - ```colcon build -DROS_EDITION=ROS2 -DHUMBLE_ROS=humble```
    - Or modify CMakeLists.txt to use correct version by default.
      - ```sed -i '1i\set(ROS_EDITION "ROS2")\nset(HUMBLE_ROS "humble")' src/livox_ros_driver2/CMakeLists.txt```
+
+### Non-sudo approach
+
+In the *livox_ros_driver2/CMakeLists.txt* file around line 250.
+
+Replace: 
+
+```
+find_library(LIVOX_LIDAR_SDK_LIBRARY liblivox_lidar_sdk_shared.so /usr/local/lib REQUIRED)
+```
+
+With: 
+
+```
+#find_library(LIVOX_LIDAR_SDK_LIBRARY liblivox_lidar_sdk_shared.so /usr/local/lib REQUIRED)
+
+Include(FetchContent)
+
+# === get deps ===
+FetchContent_Declare(
+  Livox-SDK2
+  GIT_REPOSITORY https://github.com/Livox-SDK/Livox-SDK2
+  GIT_TAG         v1.2.5 # or a later release
+)
+
+# === compile sdk2 ===
+FetchContent_MakeAvailable(Livox-SDK2)
+
+# === hack the pre-existing defines to point at the _deps folder ===
+set(LIVOX_LIDAR_SDK_LIBRARY livox_lidar_sdk_shared)
+set(LIVOX_LIDAR_SDK_INCLUDE_DIR "${livox-sdk2_SOURCE_DIR}/include")
+```
 
 ### Running
 
