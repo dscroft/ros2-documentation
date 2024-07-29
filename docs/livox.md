@@ -96,6 +96,9 @@ set(LIVOX_LIDAR_SDK_LIBRARY livox_lidar_sdk_shared)
 set(LIVOX_LIDAR_SDK_INCLUDE_DIR "${livox-sdk2_SOURCE_DIR}/include")
 ```
 
+What this approach is doing is changing the CMakeLists.txt file so that it will download and compile a copy of the SDK to an internal folder within the work space and utilise that instead of trying to use the system installed copy. 
+This is an inefficent but it does work without installing the SDK.
+
 ### Running
 
 The contents of *livox_ros_driver2/config/HAP_config.json* need to match the ip addresses of the Lidar and host computer for the launch file to work correctly. 
