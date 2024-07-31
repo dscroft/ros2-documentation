@@ -1,11 +1,25 @@
-# Robosense
-## Requirements
-
-### Power supply
-
-
+# Robosense M1 Plus
 
 Based on https://github.com/RoboSense-LiDAR/rslidar_sdk
+
+## Requirements
+
+### Network
+
+Robosense defaults to 192.168.1.200 and communicates over 6699 and 7788.
+
+Set host to:
+  - Ip: 192.168.1.102.
+  - Netmask: 255.255.255.0
+
+Open ports:
+
+```
+sudo ufw allow from 192.168.1.200 to any port 6699
+sudo ufw allow from 192.168.1.200 to any port 7788
+```
+
+### Power supply
 
 
 ## ROS integration
