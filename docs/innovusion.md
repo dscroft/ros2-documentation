@@ -57,10 +57,27 @@ This approach uses the innovusion fork of the nebula lidar package available at 
 
 Don't follow the exact instructions on the repo README if you want to run the code alongside other nodes.
 
-1. Open workspace in terminal.
+1. From the workspace **root** directory.
 2. ```git clone git@github.com:Innovusion-Inc/nebula.git src/nebula```
 3. ```vcs import src << src/nebula/build_depends.repos```
 4. ```rosdep install --from-paths src --ignore-src -y -r```
     - Add ```--os=ubuntu:jammy``` if using a non-ubuntu distro.
+5. Specify the sensor model as Falcon:
+    - ```sed -i '2s/<arg name="sensor_model" description="Robin\/Falcon"/<arg name="sensor_model" default="Falcon" description="Robin\/Falcon"/' src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml```
 5. ```ros2 launch src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml```
+6. `colcon build`
 
+### Running
+
+#### To use it with rviz2
+- Run the ROS2 node:
+```bash
+ros2 launch sensors_ws/src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml
+```
+When using rviz, the point cloud is rotated incorrectly, use a static transform publisher in a separate terminal (CTRL+ALT+T) to rotate it 90 degrees on the Y axis:
+```bash
+ros2 run tf2_ros static_transform_publisher 0 0 0 0 1.5708 0 innovusion innovusion_rotated
+```
+- In a separate terminal, open rviz with `rviz2`
+- In rviz, under *Global Options*, change *Fixed Frame* to *innovusion_rotated*, if you're not using the static transform publisher, the *Fixed Frame* will be *innovusion*
+- In the bottom left click *Add*, change the list to *By topic*, select *PointCloud2* under *innovusion_points*

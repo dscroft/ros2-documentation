@@ -66,10 +66,8 @@ This is an inefficent but it does work without installing the SDK.
 
 Follow the manual way to edit the current CMakeLists.txt yourself, for the changes. Alternatively, use the known working version from this repo.
 
-#### Automatic way:
-```bash
-curl https://raw.githubusercontent.com/dscroft/ros2-documentation/master/resources/livox/CMakeLists.txt >> src/livox_ros_driver2/CMakeLists.txt
-```
+#### Pre-made way:
+Replace the *src/livox_ros_driver2/CMakeLists.txt* file with the one in *resources/livox* in this repo
 
 #### Manual way:
 
