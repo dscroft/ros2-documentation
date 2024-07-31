@@ -48,25 +48,32 @@ In theory this supports ROS1 and ROS2 but in reality there are some fixes requir
 Livox has two different drivers for different lidar models.
 
 ### Installing
-
-1. From the workspace src directory.
-2. Clone repo.
-    - ```git clone git@github.com:Livox-SDK/livox_ros_driver2.git```
-3. Use known good version.
-    - ```cd livox_ros_driver2```
-    - ```git checkout tags/1.2.4```
-4. Fix bug in v1.2.4 CMakeLists.txt.
-   - ```sed -i '288i set(LIVOX_INTERFACES_INCLUDE_DIRECTORIES "")' CMakeLists.txt```
-5. Configure to use ROS2.
-    - ```cp package_ROS2.xml package.xml```
-6. Build with the following.
-   - ```colcon build -DROS_EDITION=ROS2 -DHUMBLE_ROS=humble```
+From the workspace **root** directory.
+1. Clone repo at version 1.2.4.
+    - ```git clone -b 1.2.4 --depth 1 https://github.com/Livox-SDK/livox_ros_driver2.git src/livox_ros_driver2```
+2. Fix bug in v1.2.4 CMakeLists.txt.
+   - ```sed -i '288i set(LIVOX_INTERFACES_INCLUDE_DIRECTORIES "")' src/livox_ros_driver2/CMakeLists.txt```
+3. Configure to use ROS2.
+    - ```cp src/livox_ros_driver2/package_ROS2.xml src/livox_ros_driver2/package.xml```
+4. Build with the following.
+   - ```colcon build --cmake-args -DROS_EDITION=ROS2 -DHUMBLE_ROS=humble```
    - Or modify CMakeLists.txt to use correct version by default.
      - ```sed -i '1i\set(ROS_EDITION "ROS2")\nset(HUMBLE_ROS "humble")' src/livox_ros_driver2/CMakeLists.txt```
 
 ### Non-sudo approach
+What this approach is doing is changing the CMakeLists.txt file so that it will download and compile a copy of the SDK to an internal folder within the work space and utilise that instead of trying to use the system installed copy. 
+This is an inefficent but it does work without installing the SDK.
 
-In the *livox_ros_driver2/CMakeLists.txt* file around line 250.
+Follow the manual way to edit the current CMakeLists.txt yourself, for the changes. Alternatively, use the known working version from this repo.
+
+#### Automatic way:
+```bash
+curl https://raw.githubusercontent.com/dscroft/ros2-documentation/master/resources/livox/CMakeLists.txt >> src/livox_ros_driver2/CMakeLists.txt
+```
+
+#### Manual way:
+
+In the *src/livox_ros_driver2/CMakeLists.txt* file around line 250.
 
 Replace: 
 
@@ -96,9 +103,6 @@ set(LIVOX_LIDAR_SDK_LIBRARY livox_lidar_sdk_shared)
 set(LIVOX_LIDAR_SDK_INCLUDE_DIR "${livox-sdk2_SOURCE_DIR}/include")
 ```
 
-What this approach is doing is changing the CMakeLists.txt file so that it will download and compile a copy of the SDK to an internal folder within the work space and utilise that instead of trying to use the system installed copy. 
-This is an inefficent but it does work without installing the SDK.
-
 ### Running
 
 The contents of *livox_ros_driver2/config/HAP_config.json* need to match the ip addresses of the Lidar and host computer for the launch file to work correctly. 
@@ -109,6 +113,8 @@ If you are using the ip address specified above the the default config file shou
 - HAP: host_net_info: point_data_ip: *match host ip*
 - HAP: host_net_info: imu_data_ip: *match host ip*
 
-```ros2 launch livox_ros_driver2 rviz_HAP_launch.py```
-
-
+```bash
+# In the workspace root directory
+source install/setup.bash
+ros2 launch livox_ros_driver2 rviz_HAP_launch.py
+```
