@@ -64,8 +64,7 @@ Don't follow the exact instructions on the repo README if you want to run the co
     - Add ```--os=ubuntu:jammy``` if using a non-ubuntu distro.
 5. Specify the sensor model as Falcon:
     - ```sed -i '2s/<arg name="sensor_model" description="Robin\/Falcon"/<arg name="sensor_model" default="Falcon" description="Robin\/Falcon"/' src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml```
-5. ```ros2 launch src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml```
-6. `colcon build`
+5. `colcon build`
 
 ### Running
 
