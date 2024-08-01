@@ -58,7 +58,7 @@ This approach uses the innovusion fork of the nebula lidar package available at 
 Don't follow the exact instructions on the repo README if you want to run the code alongside other nodes.
 
 1. From the workspace **root** directory.
-2. ```git clone git@github.com:Innovusion-Inc/nebula.git src/nebula```
+2. ```git clone https://github.com/Innovusion-Inc/nebula.git src/nebula```
 3. ```vcs import src << src/nebula/build_depends.repos```
 4. ```rosdep install --from-paths src --ignore-src -y -r```
     - Add ```--os=ubuntu:jammy``` if using a non-ubuntu distro.
@@ -67,12 +67,11 @@ Don't follow the exact instructions on the repo README if you want to run the co
 5. `colcon build`
 
 ### Running
-
-#### To use it with rviz2
-- Run the ROS2 node:
+From the workspace root directory.
 ```bash
-ros2 launch sensors_ws/src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml
+ros2 launch src/nebula/nebula_ros/launch/innovusion_launch_all_hw.xml
 ```
+#### To use it with rviz2
 When using rviz, the point cloud is rotated incorrectly, use a static transform publisher in a separate terminal (CTRL+ALT+T) to rotate it 90 degrees on the Y axis:
 ```bash
 ros2 run tf2_ros static_transform_publisher 0 0 0 0 1.5708 0 innovusion innovusion_rotated

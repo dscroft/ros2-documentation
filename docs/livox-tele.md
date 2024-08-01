@@ -58,15 +58,19 @@ The fork fixes a number of bugs for building the driver under humble.
 Livox has two different drivers for different lidar models.
 
 ### Installing
-
-1. From the workspace src directory.
-2. Clone repo.
-    - ```git clone git@github.com:acceleration-robotics/livox_ros2_driver.git```
-3. Use known good version.
-    - ```cd livox_ros2_driver```
-    - ```git checkout 88ab3b2```
-
+From the workspace root directory.
+1. Clone repo.
+    - `git clone https://github.com/acceleration-robotics/livox_ros2_driver.git src/livox_ros2_driver`
+2. Use known good version.
+    - `cd src/livox_ros2_driver`
+    - `git checkout 88ab3b2`
+3. Build.
+   - `cd ../..`
+   - `colcon build`
 
 ### Running
-
-```ros2 launch livox_ros2_driver livox_lidar_rviz_launch.py```
+From the workspace root directory.
+```bash
+source install/setup.bash
+ros2 launch livox_ros2_driver livox_lidar_rviz_launch.py
+```

@@ -48,7 +48,7 @@ In theory this supports ROS1 and ROS2 but in reality there are some fixes requir
 Livox has two different drivers for different lidar models.
 
 ### Installing
-From the workspace **root** directory.
+From the workspace root directory.
 1. Clone repo at version 1.2.4.
     - ```git clone -b 1.2.4 --depth 1 https://github.com/Livox-SDK/livox_ros_driver2.git src/livox_ros_driver2```
 2. Fix bug in v1.2.4 CMakeLists.txt.
@@ -111,8 +111,9 @@ If you are using the ip address specified above the the default config file shou
 - HAP: host_net_info: point_data_ip: *match host ip*
 - HAP: host_net_info: imu_data_ip: *match host ip*
 
+
+From the workspace root directory. The default rviz profile has the wrong topic name, it should be */livox/lidar/points*
 ```bash
-# In the workspace root directory
 source install/setup.bash
 ros2 launch livox_ros_driver2 rviz_HAP_launch.py
 ```
